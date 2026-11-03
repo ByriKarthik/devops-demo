@@ -1,6 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
-
+import os
 
 class App(BaseHTTPRequestHandler):
 
@@ -33,8 +33,10 @@ class App(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(response).encode())
 
 
-server = HTTPServer(("0.0.0.0", 5000), App)
+port = int(os.environ.get("PORT", 5000))
 
-print("Application running on port 5000")
+server = HTTPServer(("0.0.0.0", port), App)
+
+print(f"Application running on port {port}")
 
 server.serve_forever()
